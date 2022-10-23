@@ -1,1 +1,2 @@
 # maze-walker
+sample project
