@@ -1,2 +1,2 @@
 # maze-walker
-another change
+another change and sample project
