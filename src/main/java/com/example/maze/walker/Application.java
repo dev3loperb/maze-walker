@@ -3,10 +3,8 @@ package com.example.maze.walker;
 import java.util.Scanner;
 
 public class Application {
-    public static void main(String[] args) throws Exception {
-        int labLength = 5;
-        int labWidth = 20;
-        Integer[][] core = new Integer[labLength][labWidth];
+    public static void main(String[] args) {
+        Integer[][] core = new Integer[5][20];
         int playerPosX = 0;
         int playerPosY = 0;
         resetCore(core, playerPosY, playerPosX);
@@ -21,14 +19,17 @@ public class Application {
                 int x = currentDirection[0];
                 int y = currentDirection[1];
 
-                core[playerPosY][playerPosX] = 0;
-                core[playerPosY + y][playerPosX + x] = 1;
-                playerPosY += y;
-                playerPosX += x;
+                if (!(playerPosY + y < 0 || playerPosX + x < 0 || playerPosY + y >= core.length || playerPosX + x >= core[0].length)) {
+                    core[playerPosY][playerPosX] = 0;
+                    core[playerPosY + y][playerPosX + x] = 1;
 
+                    playerPosY += y;
+                    playerPosX += x;
+                }
                 clearScreen();
                 showCore(core);
                 System.out.println();
+
             }
         }
         System.out.println("GAME WON");
@@ -53,6 +54,7 @@ public class Application {
             case 'A':
             case 'a':
                 x = -1;
+                break;
         }
         int[] result = new int[2];
         result[0] = x;
@@ -70,11 +72,21 @@ public class Application {
     }
 
     public static void showCore(Integer[][] array) {
+        String wallTile = "†";
+        for (int i = 0; i < array[0].length + 2; i++) {
+            System.out.print(wallTile);
+        }
+        System.out.println();
         for (int i = 0; i < array.length; i++) {
+            System.out.print(wallTile);
             for (int j = 0; j < array[i].length; j++) {
                 System.out.print(array[i][j]);
             }
+            System.out.print(wallTile);
             System.out.println();
+        }
+        for (int i = 0; i < array[0].length + 2; i++) {
+            System.out.print(wallTile);
         }
     }
 
@@ -86,4 +98,5 @@ public class Application {
     public static boolean conditionWin(Integer[][] array, int posY, int posX) {
         return posY == array.length - 1 && posX == array[0].length - 1;
     }
+
 }
