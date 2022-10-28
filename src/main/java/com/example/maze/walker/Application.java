@@ -35,11 +35,13 @@ public class Application {
             int y = currentDirection[1];
 
             if (!(playerPosY + y < 0 || playerPosX + x < 0 || playerPosY + y >= core.length || playerPosX + x >= core[0].length)) {
-                core[playerPosY][playerPosX] = EMPTY_TILE;
-                core[playerPosY + y][playerPosX + x] = CHARACTER_TILE;
+                if (core[playerPosY + y][playerPosX + x] < 1) {
+                    core[playerPosY][playerPosX] = EMPTY_TILE;
+                    core[playerPosY + y][playerPosX + x] = CHARACTER_TILE;
 
-                playerPosY += y;
-                playerPosX += x;
+                    playerPosY += y;
+                    playerPosX += x;
+                }
             }
             clearScreen();
             showCore(core);
@@ -105,7 +107,7 @@ public class Application {
     }
 
     public static void showCore(Integer[][] array) {
-        String wallTile = "†";
+        String wallTile = "\u25A6";
 
         for (int i = 0; i < array[0].length + 2; i++) {
             System.out.print(wallTile);
