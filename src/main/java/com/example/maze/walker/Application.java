@@ -19,30 +19,26 @@ public class Application {
         Integer[][] core = new Integer[5][20];
         int playerPosX = 0;
         int playerPosY = 0;
+
         resetCore(core, playerPosY, playerPosX);
         showCore(core);
-        Scanner input = new Scanner(System.in);
+
         while (conditionWin(core, playerPosY, playerPosX) == false) {
-            String scan = input.nextLine();
+            char directionKey = new Scanner(System.in).nextLine().charAt(0);
+            int[] currentDirection = direction(directionKey);
+            int x = currentDirection[0];
+            int y = currentDirection[1];
 
-            for (int i = 0; i < scan.length(); ++i) {
+            if (!(playerPosY + y < 0 || playerPosX + x < 0 || playerPosY + y >= core.length || playerPosX + x >= core[0].length)) {
+                core[playerPosY][playerPosX] = EMPTY_TILE;
+                core[playerPosY + y][playerPosX + x] = CHARACTER_TILE;
 
-                int[] currentDirection = direction(scan.charAt(i));
-                int x = currentDirection[0];
-                int y = currentDirection[1];
-
-                if (!(playerPosY + y < 0 || playerPosX + x < 0 || playerPosY + y >= core.length || playerPosX + x >= core[0].length)) {
-                    core[playerPosY][playerPosX] = EMPTY_TILE;
-                    core[playerPosY + y][playerPosX + x] = CHARACTER_TILE;
-
-                    playerPosY += y;
-                    playerPosX += x;
-                }
-                clearScreen();
-                showCore(core);
-                System.out.println();
-
+                playerPosY += y;
+                playerPosX += x;
             }
+            clearScreen();
+            showCore(core);
+            System.out.println();
         }
         System.out.println("GAME WON");
     }
