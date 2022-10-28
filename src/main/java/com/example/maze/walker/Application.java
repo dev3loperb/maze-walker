@@ -1,5 +1,10 @@
 package com.example.maze.walker;
 
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
+
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
@@ -24,7 +29,7 @@ public class Application {
         showCore(core);
 
         while (conditionWin(core, playerPosY, playerPosX) == false) {
-            char directionKey = new Scanner(System.in).nextLine().charAt(0);
+            char directionKey = nextDirectionKey();
             int[] currentDirection = direction(directionKey);
             int x = currentDirection[0];
             int y = currentDirection[1];
@@ -41,6 +46,25 @@ public class Application {
             System.out.println();
         }
         System.out.println("GAME WON");
+    }
+
+    private static char nextDirectionKey() {
+        try (Terminal terminal = TerminalBuilder.terminal()) {
+            terminal.enterRawMode();
+            try (Reader reader = terminal.reader()) {
+                return switch (reader.read()) {
+                    case 119 -> 'w';
+                    case 100 -> 'd';
+                    case 97 -> 'a';
+                    case 115 -> 's';
+                    default -> ' ';
+                };
+            } catch (IOException e) {
+                return ' ';
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static int[] direction(char letter) {
