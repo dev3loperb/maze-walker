@@ -1,8 +1,20 @@
 package com.example.maze.walker;
 
+import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Application {
+    private static final int WALL_TILE = 8;
+    private static final int EMPTY_TILE = 0;
+    private static final int CHARACTER_TILE = 1;
+
+    private static Map<Integer, Character> mapping = Map.of(
+            CHARACTER_TILE, '@',
+            WALL_TILE, '†',
+            EMPTY_TILE, ' '
+    );
+
     public static void main(String[] args) {
         Integer[][] core = new Integer[5][20];
         int playerPosX = 0;
@@ -20,8 +32,8 @@ public class Application {
                 int y = currentDirection[1];
 
                 if (!(playerPosY + y < 0 || playerPosX + x < 0 || playerPosY + y >= core.length || playerPosX + x >= core[0].length)) {
-                    core[playerPosY][playerPosX] = 0;
-                    core[playerPosY + y][playerPosX + x] = 1;
+                    core[playerPosY][playerPosX] = EMPTY_TILE;
+                    core[playerPosY + y][playerPosX + x] = CHARACTER_TILE;
 
                     playerPosY += y;
                     playerPosX += x;
@@ -65,7 +77,8 @@ public class Application {
     public static void resetCore(Integer[][] array, int playerPosY, int playerPosX) {
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = 0;
+                array[i][j] = EMPTY_TILE;
+                array[i][j] = identifyTile();
             }
         }
         array[playerPosY][playerPosX] = 1;
@@ -73,6 +86,7 @@ public class Application {
 
     public static void showCore(Integer[][] array) {
         String wallTile = "†";
+
         for (int i = 0; i < array[0].length + 2; i++) {
             System.out.print(wallTile);
         }
@@ -80,7 +94,7 @@ public class Application {
         for (int i = 0; i < array.length; i++) {
             System.out.print(wallTile);
             for (int j = 0; j < array[i].length; j++) {
-                System.out.print(array[i][j]);
+                System.out.print(mapping.get(array[i][j]));
             }
             System.out.print(wallTile);
             System.out.println();
@@ -99,4 +113,13 @@ public class Application {
         return posY == array.length - 1 && posX == array[0].length - 1;
     }
 
+    public static int identifyTile() {
+        Random cell = new Random();
+        int result = cell.nextInt(0, 100);
+        if (result < 90) {
+            return EMPTY_TILE;
+        } else {
+            return WALL_TILE;
+        }
+    }
 }
