@@ -10,9 +10,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Application {
-    private static final int WALL_TILE = 8;
-    private static final int EMPTY_TILE = 0;
-    private static final int CHARACTER_TILE = 1;
+    public static final int WALL_TILE = 8;
+    public static final int EMPTY_TILE = 0;
+    public static final int CHARACTER_TILE = 1;
 
     private static Map<Integer, Character> mapping = Map.of(
             CHARACTER_TILE, '@',
@@ -21,11 +21,14 @@ public class Application {
     );
 
     public static void main(String[] args) {
-        Integer[][] core = new Integer[5][20];
+        MazeGenerator mazeGenerator = new RandomMazeGenerator();
         int playerPosX = 0;
         int playerPosY = 0;
 
-        resetCore(core, playerPosY, playerPosX);
+        clearScreen();
+        Integer[][] core = mazeGenerator.generate(20, 80);
+        core[0][0] = 1;
+//        resetCore(core, playerPosY, playerPosX);
         showCore(core);
 
         while (conditionWin(core, playerPosY, playerPosX) == false) {
@@ -96,16 +99,6 @@ public class Application {
         return result;
     }
 
-    public static void resetCore(Integer[][] array, int playerPosY, int playerPosX) {
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                array[i][j] = EMPTY_TILE;
-                array[i][j] = identifyTile();
-            }
-        }
-        array[playerPosY][playerPosX] = 1;
-    }
-
     public static void showCore(Integer[][] array) {
         String wallTile = "\u25A6";
 
@@ -133,15 +126,5 @@ public class Application {
 
     public static boolean conditionWin(Integer[][] array, int posY, int posX) {
         return posY == array.length - 1 && posX == array[0].length - 1;
-    }
-
-    public static int identifyTile() {
-        Random cell = new Random();
-        int result = cell.nextInt(0, 100);
-        if (result < 90) {
-            return EMPTY_TILE;
-        } else {
-            return WALL_TILE;
-        }
     }
 }
