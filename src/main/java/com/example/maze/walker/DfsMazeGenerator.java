@@ -9,7 +9,7 @@ import static com.example.maze.walker.Application.showCore;
 
 public class DfsMazeGenerator implements MazeGenerator {
 
-    private static final Random RANDOM = new Random(2);
+    private static final Random RANDOM = new Random();
     private static final int INITIAL_MAZE_FIELD = 9;
 
     @Override
