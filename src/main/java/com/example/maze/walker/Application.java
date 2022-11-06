@@ -6,6 +6,7 @@ import org.jline.terminal.TerminalBuilder;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Application {
     public static final int WALL_TILE = 8;
@@ -19,7 +20,25 @@ public class Application {
     );
 
     public static void main(String[] args) {
-        MazeGenerator mazeGenerator = new DfsMazeGenerator();
+        boolean correctChoice = false;
+        MazeGenerator mazeGenerator = null;
+        do {
+            System.out.println("Choose maze implementation:");
+            System.out.println("1. DFS");
+            System.out.println("2. DFSv2");
+            String choice = new Scanner(System.in).nextLine();
+            switch (choice) {
+                case "1" -> {
+                    mazeGenerator = new DfsMazeGenerator();
+                    correctChoice = true;
+                }
+                case "2" -> {
+                    mazeGenerator = new DfsMazeGeneratorV2();
+                    correctChoice = true;
+                }
+                default -> System.out.println("Incorrect choice. Repeat please");
+            }
+        } while (!correctChoice);
         int playerPosX = 0;
         int playerPosY = 0;
 
@@ -48,7 +67,11 @@ public class Application {
             showCore(core);
             System.out.println();
         }
-        System.out.println("GAME WON");
+        clearScreen();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("YOU WIN");
     }
 
     private static char nextDirectionKey() {
