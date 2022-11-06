@@ -6,8 +6,6 @@ import org.jline.terminal.TerminalBuilder;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
 
 public class Application {
     public static final int WALL_TILE = 8;
@@ -21,7 +19,7 @@ public class Application {
     );
 
     public static void main(String[] args) {
-        MazeGenerator mazeGenerator = new RandomMazeGenerator();
+        MazeGenerator mazeGenerator = new DfsMazeGenerator();
         int playerPosX = 0;
         int playerPosY = 0;
 
@@ -117,6 +115,7 @@ public class Application {
         for (int i = 0; i < array[0].length + 2; i++) {
             System.out.print(wallTile);
         }
+        System.out.println();
     }
 
     public static void clearScreen() {
