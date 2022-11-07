@@ -1,14 +1,13 @@
 package com.example.maze.walker;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import java.awt.Canvas;
+import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class DesktopApp extends Canvas {
+public class DesktopApp extends JPanel {
     private final Integer[][] array;
     private int playerPosY = 0;
     private int playerPosX = 0;
@@ -68,10 +67,10 @@ public class DesktopApp extends Canvas {
 
     private class Keyboard implements KeyListener {
 
-        private final Canvas canvas;
+        private final JPanel jPanel;
 
-        public Keyboard(Canvas canvas) {
-            this.canvas = canvas;
+        public Keyboard(JPanel jPanel) {
+            this.jPanel = jPanel;
         }
 
         @Override
@@ -103,14 +102,12 @@ public class DesktopApp extends Canvas {
                     playerPosX += x;
                 }
             }
-            canvas.repaint();
+            jPanel.repaint();
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
-    }
-
-
+        }
     }
 }
 
