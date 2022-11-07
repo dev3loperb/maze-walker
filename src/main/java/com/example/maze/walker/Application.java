@@ -43,7 +43,7 @@ public class Application {
         int playerPosY = 0;
 
         clearScreen();
-        Integer[][] core = mazeGenerator.generate(20, 80);
+        Integer[][] core = mazeGenerator.generate(19, 79);
         core[0][0] = 1;
 //        resetCore(core, playerPosY, playerPosX);
         showCore(core);
