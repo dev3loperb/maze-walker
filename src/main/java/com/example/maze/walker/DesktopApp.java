@@ -55,6 +55,7 @@ public class DesktopApp extends JPanel {
         f.add(m);
         f.setSize(1000, 1000);
         f.setVisible(true);
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     @Override
